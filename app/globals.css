@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+/*
+ * Design-Richtung wird beim ersten Feature (F-001) festgelegt und in
+ * docs/decisions.md dokumentiert. Hier stehen nur die Grundtöne und die
+ * Schrift-Verknüpfung, damit das Gerüst schon zusammenpasst.
+ */
+@theme {
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  --color-canvas: #f5f2ec;
+  --color-surface: #fffdf9;
+  --color-ink: #1d1b17;
+  --color-muted: #6b655c;
+  --color-line: #e4ded2;
+}
+
+body {
+  background-color: var(--color-canvas);
+}

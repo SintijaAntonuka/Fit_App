@@ -4,7 +4,7 @@ Abgeleitet aus `SPEC.md`. Ein Feature ist ein Ablauf, den eine Person von Anfang
 
 | ID | Name | Phase | Status | BR/Entitäten |
 |---|---|---|---|---|
-| F-001 | Mitglied aufnehmen und Tarif zuweisen | 1 | offen | Entitäten: Mitglied, Tarif |
+| F-001 | Mitglied aufnehmen und Tarif zuweisen | 1 | fertig | Entitäten: Mitglied, Tarif |
 | F-002 | Kursart und Kurstermin planen (Trainer:in zuweisen) | 1 | offen | Entitäten: Kursart, Kurstermin, Trainer |
 | F-003 | Kurstermine ansehen und online buchen | 1 | offen | BR3; Entitäten: Mitglied, Kurstermin, Buchung, Kursart |
 | F-004 | Kapazität prüfen und Warteliste führen | 1 | offen | BR2; Entitäten: Kurstermin, Buchung, Wartelistenplatz |
@@ -15,3 +15,12 @@ Abgeleitet aus `SPEC.md`. Ein Feature ist ein Ablauf, den eine Person von Anfang
 | F-009 | Personal-Training-Termin buchen, stornieren und bezahlen | 2 | offen | BR5; Entitäten: Mitglied, Trainer, PTSlot, PersonalTrainingTermin, Tarif |
 | F-010 | On-Demand-Videos für Plus und Premium bereitstellen | 2 | offen | Entitäten: OnlineVideo, Trainer, Tarif |
 | F-011 | Lisa an Mitgliedergeburtstage erinnern | 2 | offen | Entitäten: Mitglied |
+
+## Hinweise
+
+- **F-001** ist fertig: Mitglieder anlegen, Tarif zuweisen, Liste/Formular, Prisma-Migration
+  und Seed (Basic/Plus/Premium). Tests: `tests/validierung.test.ts`,
+  `tests/mitglieder.db.test.ts`, `tests/tarife.test.ts`, `tests/format.test.ts`.
+- **BR1** liegt bereits als reine, UI-freie Regel in `lib/buchungsregeln.ts` mit Tests
+  (`tests/buchungsregeln.br1.test.ts`) bereit. Sie ist noch **nicht** an Buchungs-Datensätze
+  gekoppelt; die Anbindung erfolgt in F-003/F-005.

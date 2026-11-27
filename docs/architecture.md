@@ -24,11 +24,23 @@ Prisma 7 verbindet sich nicht mehr über die eingebaute Engine, sondern über ei
 - Der generierte Client landet unter `generated/prisma` (ESM-Generator `prisma-client`) und ist über `.gitignore` ausgeschlossen.
 - Verbindung und Singleton stehen in `lib/prisma.ts`; der `DATABASE_URL` kommt aus `.env` (`file:./dev.db`).
 
-### Datenmodell bewusst noch leer
-`prisma/schema.prisma` enthält nur Generator und Datasource, keine Modelle. Laut `AGENTS.md` entstehen Entitäten und Datenmodell im ersten Feature, das sie braucht (F-001), und zwar als Prisma-Migration. Deshalb gibt es hier noch keine Migration und keine Tabellen.
+### Datenmodell wächst pro Feature
+`prisma/schema.prisma` enthält Generator und Datasource sowie die Modelle, die das jeweils
+fertige Feature braucht. F-001 legt `Tarif` und `Mitglied` an; jede Schema-Änderung läuft als
+Prisma-Migration (`npx prisma migrate dev`). Der Seed (`prisma/seed.ts`, Skript `db:seed`)
+legt die drei Tarife Basic/Plus/Premium an und ist in `prisma7.config.ts` als Seed hinterlegt.
 
-### Design-Richtung noch offen
-Schriften und Grundtöne sind in `app/globals.css` und `app/layout.tsx` nur vorbereitet. Die eigentliche Design-Richtung legt das erste Feature (F-001) fest und dokumentiert sie in `docs/decisions.md`.
+### Design-Richtung: ruhig und editorial
+In F-001 festgelegt und in `docs/decisions.md` dokumentiert: warme Stein-Grundfläche, weiße
+Karten, Fraunces (Display) + Plus Jakarta Sans (Text), Terracotta-Akzent (`#b5431e`),
+Status-Badges und `tabular-nums` für Zahlen und Datumswerte. Die Tokens stehen als `@theme`
+in `app/globals.css`.
+
+### Tests mit Vitest
+`npm test` führt Vitest 3 über `tests/` aus. Unit-Tests prüfen reine Logik, ein
+Integrationstest prüft die Anlage gegen eine temporäre SQLite-Datei mit eingespielter
+Migration. Für jede Business Rule aus `SPEC.md` gehört mindestens ein Test zum jeweiligen
+Feature.
 
 ### Tailwind über PostCSS statt Turbopack-Loader
 Der Standard-Weg ist `@tailwindcss/postcss` mit `postcss.config.mjs`. Der alternative Turbopack-CSS-Loader (`@tailwindcss/turbopack`) startet beim Build einen Hilfsprozess, der an einen Port bindet; das ist in eingeschränkten Umgebungen (Sandbox) nicht erlaubt. Die PostCSS-Variante kommt ohne zusätzlichen Prozess aus und baut zuverlässig.

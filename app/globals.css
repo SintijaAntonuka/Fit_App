@@ -1,21 +1,58 @@
 @import "tailwindcss";
 
 /*
- * Design-Richtung wird beim ersten Feature (F-001) festgelegt und in
- * docs/decisions.md dokumentiert. Hier stehen nur die Grundtöne und die
- * Schrift-Verknüpfung, damit das Gerüst schon zusammenpasst.
+ * Design-Richtung (festgelegt in F-001, dokumentiert in docs/decisions.md):
+ * "ruhig und editorial" – warme Stein-Töne als Grundfläche, eine kräftige
+ * Terracotta-Akzentfarbe für Hauptaktionen und den aktiven Menüpunkt,
+ * Fraunces für Überschriften, Plus Jakarta Sans für Text.
  */
 @theme {
   --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
 
-  --color-canvas: #f5f2ec;
+  /* Flächen */
+  --color-canvas: #f4f1ea;
   --color-surface: #fffdf9;
-  --color-ink: #1d1b17;
-  --color-muted: #6b655c;
-  --color-line: #e4ded2;
+  --color-surface-sunken: #efeae0;
+  --color-line: #e4ddd0;
+  --color-line-strong: #d6ccba;
+
+  /* Text */
+  --color-ink: #211f1a;
+  --color-muted: #6f685d;
+  --color-faint: #9a938a;
+
+  /* Akzent (Terracotta/Kupfer) */
+  --color-accent: #b5431e;
+  --color-accent-hover: #9c3816;
+  --color-accent-soft: #f6e5dd;
+  --color-accent-ink: #7c2c12;
+
+  /* Status */
+  --color-aktiv: #2f6b4f;
+  --color-aktiv-soft: #dcefe4;
+  --color-pausiert: #a8730f;
+  --color-pausiert-soft: #f6ecd2;
+  --color-gekuendigt: #8a4a45;
+  --color-gekuendigt-soft: #f1e2df;
+  --color-danger: #b3261e;
+
+  --radius-card: 1rem;
+  --shadow-card: 0 1px 2px rgba(33, 31, 26, 0.04), 0 8px 24px -12px rgba(33, 31, 26, 0.12);
 }
 
 body {
   background-color: var(--color-canvas);
+}
+
+/* Tabellenzahlen und Datumswerte ruhig ausrichten. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Sichtbarer, freundlicher Fokus überall. */
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 0.35rem;
 }

@@ -1,8 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -10,4 +8,39 @@ generator client {
 
 datasource db {
   provider = "sqlite"
+}
+
+/// Mitgliedsstatus laut SPEC.md (Entität Mitglied).
+/// `gekuendigt` entspricht fachlich "gekündigt".
+enum MitgliedStatus {
+  aktiv
+  pausiert
+  gekuendigt
+}
+
+/// Tarifstufen Basic, Plus, Premium (Entität Tarif).
+/// `max_kursbuchungen_pro_monat = null` bedeutet unbegrenzt.
+model Tarif {
+  tarif_id                    Int        @id @default(autoincrement())
+  name                        String     @unique
+  max_kursbuchungen_pro_monat Int?
+  online_zugang               Boolean    @default(false)
+  pt_slots_pro_monat          Int        @default(0)
+  mitglieder                  Mitglied[]
+}
+
+/// Mitglied (Entität Mitglied aus SPEC.md).
+model Mitglied {
+  mitglied_id            Int            @id @default(autoincrement())
+  name                   String
+  geburtsdatum           DateTime
+  status                 MitgliedStatus @default(aktiv)
+  tarif_id               Int
+  tarif                  Tarif          @relation(fields: [tarif_id], references: [tarif_id])
+  buchungen_dieser_monat Int            @default(0)
+  no_show_zaehler        Int            @default(0)
+  sperre_bis             DateTime?
+  angelegt_am            DateTime       @default(now())
+
+  @@index([tarif_id])
 }
